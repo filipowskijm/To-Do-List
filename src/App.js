@@ -8,9 +8,9 @@ function App() {
 
   const addTodo = () => {
     if (todo !== "") {
-    setTodos([...todos, todo]);
-    setTodo("");
-  }
+      setTodos([...todos, todo]);
+      setTodo("");
+    }
   };
 
   const deleteTodo = (text) => {
@@ -24,19 +24,18 @@ function App() {
     <div className="App">
         <h1>To-Do List</h1>
       <div>
-      <form>
-            <label>Task:</label>
-                <input 
-                type="text" 
-                name="todo"
-                value={todo}
-                placeholder="Enter a Task..." 
-                onChange={(e) => {
-                  setTodo(e.target.value);
-                }}>
-                </input>
-            <input type="submit" onClick={addTodo}></input>
-        </form>
+        <input 
+         type="text" 
+         name="todo"
+          value={todo}
+          placeholder="Enter a Task..." 
+          onChange={(e) => {
+            setTodo(e.target.value);
+           }}
+          />
+         <button type="submit" onClick={addTodo}>
+          Add
+         </button>
       </div>
       {todos?.length > 0 ? (
         <ul className="todo-list">
