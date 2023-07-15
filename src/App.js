@@ -1,31 +1,32 @@
 import './App.css';
 import React, { useState } from 'react';
 
-function App() {
+function App() {                              // *much of this code was inspired by this tutorial by Muhammad Yahya: 
+                                              //  https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179
 
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState("");          // initializing state variables
   const [todos, setTodos] = useState([]);
 
-  const addTodo = () => {
+  const addTodo = () => {                        // add new todo function if text input isn't empty
     if (todo !== "") {
       setTodos([...todos, todo]);
       setTodo("");
     }
   };
 
-  const deleteTodo = (text) => {
+  const deleteTodo = (text) => {                // delete todo function
     const newTodos = todos.filter((todo) => {
       return todo !== text;
     });
     setTodos(newTodos);
   };
 
-  return (
+  return (                                      
     <div className="App">
         <h1>To-Do List</h1>
-      <div>
+      <div>                                           
         <input 
-         type="text" 
+         type="text"                       // main rendering of todo input form
          name="todo"
           value={todo}
           placeholder="Enter a Task..." 
@@ -37,12 +38,11 @@ function App() {
           Add
          </button>
       </div>
-      {todos?.length > 0 ? (
+      {todos?.length > 0 ? (                // if number of todos is greater than 0, show the list of todos
         <ul className="todo-list">
           {todos.map((todo, index) => (
             <div className="todo">
               <li key={index}> {todo} </li>
-
               <button 
               className="delete-button"
               onClick={() => {
@@ -54,9 +54,9 @@ function App() {
             </div>
           ))}
         </ul>
-      ) : (
+      ) : (                                 // if there aren't any todos yet, show "No task found"
         <div className="empty">
-          <p>No task found</p>
+          <p>No tasks yet</p>
         </div>
       )}
     </div>
