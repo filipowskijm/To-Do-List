@@ -1,8 +1,18 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function App() {                              // *much of this code was inspired by this tutorial by Muhammad Yahya: 
-                                              //  https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179
+function App() { 
+
+ // *much of this code was inspired by this tutorial by Muhammad Yahya: 
+ //  https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179
+
+  const [data, setData] = useState({})
+
+  useEffect(() => {
+      fetch('/home')
+      .then(res => res.json())
+      .then(data => setData(data))
+    }, [])
 
   const [todo, setTodo] = useState("");          // initializing state variables
   const [todos, setTodos] = useState([]);
@@ -24,6 +34,10 @@ function App() {                              // *much of this code was inspired
   return (                                      
     <div className="App">
         <h1>To-Do List</h1>
+
+    <div>{data.name}</div>              
+    <div>{data.age}</div>
+
       <div>                                           
         <input 
          type="text"                       // main rendering of todo input form
