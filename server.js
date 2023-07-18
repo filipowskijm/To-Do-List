@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -8,8 +9,6 @@ const port = process.env.PORT || 5000 ;
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.use(bodyParser.json(), urlencodedParser);
-
-const dbURI = 'mongodb+srv://admin:a3cRBIVtdhYnXkao@cluster0.oa1qzho.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.connect(dbURI, { useNewUrlParser:true, useUnifiedTopology:true })
 .then((res) => {
