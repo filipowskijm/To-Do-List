@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react';
 
 function App() { 
 
- // *much of this code was inspired by this tutorial by Muhammad Yahya: 
- //  https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179
-
-  const [data, setData] = useState({})
-
+  const [data, setData] = useState({})          // *much of this code was inspired by this tutorial by Muhammad Yahya: https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179 
+  
   useEffect(() => {
       fetch('/home')
       .then(res => res.json())
       .then(data => setData(data))
-    }, [])
+  }, [])
 
   const [todo, setTodo] = useState("");          // initializing state variables
   const [todos, setTodos] = useState([]);
@@ -31,12 +28,12 @@ function App() {
     setTodos(newTodos);
   };
 
-  return (                                      
+  return (                                        
     <div className="App">
         <h1>To-Do List</h1>
 
     <div>{data.name}</div>              
-    <div>{data.age}</div>
+    <div>{data.age}</div>            
 
       <div>                                           
         <input 
@@ -45,7 +42,7 @@ function App() {
           value={todo}
           placeholder="Enter a Task..." 
           onChange={(e) => {
-            setTodo(e.target.value);
+            setTodo(e.target.value);            
            }}
           />
          <button type="submit" onClick={addTodo}>
