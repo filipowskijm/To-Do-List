@@ -3,14 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 function App() { 
 
-  // const [data, setData] = useState({})   
-  // *much of this code was inspired by this tutorial by Muhammad Yahya: https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179 
-  
-  // useEffect(() => {
-  //     fetch('/home')
-  //     .then(res => res.json())
-  //     .then(data => setData(data))
-  // }, [])
+  // *code was inspired by this tutorial by Muhammad Yahya: https://medium.com/oli-systems/react-todo-app-tutorial-e935fe716179 
 
   const [todo, setTodo] = useState("");          // initializing state variables
   const [todos, setTodos] = useState([]);
@@ -32,10 +25,6 @@ function App() {
   return (                                        
     <div className="App">
         <h1>To-Do List</h1>
-
-    {/* <div>{data.name}</div>              
-    <div>{data.age}</div>             */}
-
       <div>                                           
         <input 
          type="text"                       // main rendering of todo input form
@@ -74,5 +63,16 @@ function App() {
     </div>
   );
 }
+
+// const [data, setData] = useState({}) 
+
+  // useEffect(() => {
+  //     fetch('/home')
+  //     .then(res => res.json())
+  //     .then(data => setData(data))
+  // }, [])
+
+      {/* <div>{data.name}</div>              
+    <div>{data.age}</div>             */}
 
 export default App;
