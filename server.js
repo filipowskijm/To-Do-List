@@ -10,7 +10,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.use(bodyParser.json(), urlencodedParser);
 
-mongoose.connect(dbURI, { useNewUrlParser:true, useUnifiedTopology:true })
+mongoose.connect(process.env.dbURI, { useNewUrlParser:true, useUnifiedTopology:true })
 .then((res) => {
     app.listen(port, () => console.log(`Listening on port ${port}`))
 })
@@ -23,24 +23,62 @@ app.get('/home', (req, res) => {
     })
 })
 
-app.post('/register', async (req, res) => {
-    const user = req.body;
+app.post("/register", (request, response) => {
+    // hash the password
+    bcrypt
+      .hash(request.body.password, 10)
+      .then((hashedPassword) => {
+        // create a new user instance and collect the data
+        const user = new User({
+          email: request.body.email,
+          password: hashedPassword,
+        });
+  
+        // save the new user
+        user
+          .save()
+          // return success if the new user is added to the database successfully
+          .then((result) => {
+            response.status(201).send({
+              message: "User Created Successfully",
+              result,
+            });
+          })
+          // catch error if the new user wasn't added successfully to the database
+          .catch((error) => {
+            response.status(500).send({
+              message: "Error creating user",
+              error,
+            });
+          });
+      })
+      // catch error if the password hash isn't successful
+      .catch((e) => {
+        response.status(500).send({
+          message: "Password was not hashed successfully",
+          e,
+        });
+      });
+  });
 
-    const takenUsername = await User.findOne({username: user.username})
-    const takenEmail = await User.findOne({email: user.email})
+// app.post('/register', async (req, res) => {
+//     const user = req.body;
 
-    if (takenUsername || takenEmail) {
-        res.json({message: 'Username or email has already been taken'})
-    } else {
-        user.password = await bcrypt.hash(req.body.password, 10)
+//     const takenUsername = await User.findOne({username: user.username})
+//     const takenEmail = await User.findOne({email: user.email})
 
-        const dbUser = new User({
-            username: user.username.toLowerCase(),
-            email: user.email.toLowerCase(),
-            password: user.password
-        })
+//     if (takenUsername || takenEmail) {
+//         res.json({message: 'Username or email has already been taken'})
+//     } else {
+//         user.password = await bcrypt.hash(req.body.password, 10)
 
-        dbUser.save()
-        res.json({message: 'Success'})
-    }
-})
+//         const dbUser = new User({
+//             username: user.username.toLowerCase(),
+//             email: user.email.toLowerCase(),
+//             password: user.password
+//         })
+
+//         dbUser.save()
+//         res.json({message: 'Success'})
+//     }
+// })
