@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('./src/models/user');
 const port = process.env.PORT || 5000 ;
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.use(bodyParser.json(), urlencodedParser);
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+app.use(bodyParser.json());
+app.use(urlencodedParser);
 
 mongoose.connect(process.env.dbURI, { useNewUrlParser:true, useUnifiedTopology:true })
 .then((res) => {
@@ -16,50 +17,74 @@ mongoose.connect(process.env.dbURI, { useNewUrlParser:true, useUnifiedTopology:t
 })
 .catch(err => console.log(err))
 
-app.get('/home', (req, res) => {
-    res.json({
-        name: 'Billy',
-        age: 99
-    })
-})
+// app.get('/home', (req, res) => {
+//     res.json({
+//         name: 'Billy',
+//         age: 99
+//     })
+// })
 
-app.post("/register", (request, response) => {
-    // hash the password
-    bcrypt
-      .hash(request.body.password, 10)
-      .then((hashedPassword) => {
-        // create a new user instance and collect the data
+app.post('/register', async (request, response) => {
+    try {
+        console.log(request.body);
+        const hashedPassword = await bcrypt.hash(request.body.password, 10);
+
         const user = new User({
-          email: request.body.email,
-          password: hashedPassword,
+            email: request.body.email,
+            password: hashedPassword,
         });
-  
-        // save the new user
-        user
-          .save()
-          // return success if the new user is added to the database successfully
-          .then((result) => {
-            response.status(201).send({
-              message: "User Created Successfully",
-              result,
-            });
-          })
-          // catch error if the new user wasn't added successfully to the database
-          .catch((error) => {
-            response.status(500).send({
-              message: "Error creating user",
-              error,
-            });
-          });
-      })
-      // catch error if the password hash isn't successful
-      .catch((e) => {
+
+        const result = await user.save();
+
+        response.status(201).send({
+            message: 'User Created Successfully',
+            result,
+        });
+    } catch (error) {
         response.status(500).send({
-          message: "Password was not hashed successfully",
-          e,
+            message: 'Error creating user',
+            error: error.message,
         });
-      });
-  });
+    }
+});
+
+// app.post("/register", (request, response) => {
+//     // hash the password
+//     bcrypt
+//       .hash(request.body.password, 5)
+//       .then((hashedPassword) => {
+//         // create a new user instance and collect the data
+//         const user = new User({
+//           email: request.body.email,
+//           password: hashedPassword,
+//         });
+  
+//         // save the new user
+//         user
+//           .save()
+//           // return success if the new user is added to the database successfully
+//           .then((result) => {
+//             response.status(201).send({
+//               message: "User Created Successfully",
+//               result,
+//             });
+//           })
+//           // catch error if the new user wasn't added successfully to the database
+//           .catch((error) => {
+//             response.status(500).send({
+//               message: "Error creating user",
+//               error,
+//             });
+//           });
+//       })
+//       // catch error if the password hash isn't successful
+//       .catch((e) => {
+//         response.status(500).send({
+//           message: "Password was not hashed successfully",
+//           e,
+//         });
+//       });
+//   });
 
 // app.post('/register', async (req, res) => {
 //     const user = req.body;
