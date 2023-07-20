@@ -72,7 +72,7 @@ function App() {
   //     .then(data => setData(data))
   // }, [])
 
-      {/* <div>{data.name}</div>              
-    <div>{data.age}</div>             */}
+    //    <div>{data.name}</div>              
+    // <div>{data.age}</div>            
 
 export default App;
