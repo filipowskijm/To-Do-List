@@ -1,5 +1,8 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import Login from './components/login';
+import Form from './components/form';
+import List from './components/list';
+import React, { useState } from 'react';
 
 function App() { 
 
@@ -25,54 +28,12 @@ function App() {
   return (                                        
     <div className="App">
         <h1>To-Do List</h1>
-      <div>                                           
-        <input 
-         type="text"                       // main rendering of todo input form
-         name="todo"
-          value={todo}
-          placeholder="Enter a Task..." 
-          onChange={(e) => {
-            setTodo(e.target.value);            
-           }}
-          />
-         <button type="submit" onClick={addTodo}>
-          Add
-         </button>
-      </div>
-      {todos?.length > 0 ? (                // if number of todos is greater than 0, show the list of todos
-        <ul className="todo-list">
-          {todos.map((todo, index) => (
-            <div className="todo">
-              <li key={index}> {todo} </li>
-              <button 
-              className="delete-button"
-              onClick={() => {
-                deleteTodo(todo);
-              }}
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </ul>
-      ) : (                                 // if there aren't any todos yet, show "No task found"
-        <div className="empty">
-          <p>No tasks yet</p>
-        </div>
-      )}
+      <Login />
+      <br></br><br></br>
+      <Form todo={todo} setTodo={setTodo} addTodo={addTodo} />
+      <List todos={todos} deleteTodo={deleteTodo} />
     </div>
   );
-}
-
-// const [data, setData] = useState({}) 
-
-  // useEffect(() => {
-  //     fetch('/home')
-  //     .then(res => res.json())
-  //     .then(data => setData(data))
-  // }, [])
-
-    //    <div>{data.name}</div>              
-    // <div>{data.age}</div>            
+}      
 
 export default App;

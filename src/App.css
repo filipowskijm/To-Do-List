@@ -6,3 +6,8 @@ body {
 li {
   list-style-type: none;
 }
+/* .todo-list{
+  text-align: center;
+  display: flex;
+  align-items: space-between;
+}  */

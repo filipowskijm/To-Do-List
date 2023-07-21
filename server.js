@@ -41,10 +41,3 @@ app.post('/register', async (request, response) => {
         });
     }
 });
-
-// app.get('/home', (req, res) => {
-//     res.json({
-//         name: 'Billy',
-//         age: 99
-//     })
-// })
