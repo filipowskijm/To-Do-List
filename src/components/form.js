@@ -1,6 +1,6 @@
 function Form({ todo, setTodo, addTodo }) {
-return(
-<div>                                           
+  return(
+      <div>                                           
         <input 
          type="text"                       // main rendering of todo input form
          name="todo"

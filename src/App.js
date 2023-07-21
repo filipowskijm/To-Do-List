@@ -27,9 +27,9 @@ function App() {
 
   return (                                        
     <div className="App">
-        <h1>To-Do List</h1>
       <Login />
       <br></br><br></br>
+      <h1>To-Do List</h1>
       <Form todo={todo} setTodo={setTodo} addTodo={addTodo} />
       <List todos={todos} deleteTodo={deleteTodo} />
     </div>

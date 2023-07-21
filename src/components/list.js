@@ -1,5 +1,5 @@
 function List({ todos, deleteTodo }) {
-return (
+    return (
     <>
     {todos?.length > 0 ? (                // if number of todos is greater than 0, show the list of todos
         <ul className="todo-list">
